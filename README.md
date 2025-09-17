@@ -58,6 +58,25 @@ training_clips/
     └── ...
 ```
 
+## Creating Training Clips
+
+If you have longer tennis videos and want to create training clips with proper labels, use the `create_snippets.py` script:
+
+### Basic Usage
+
+Create 3-second clips from a video with timestamp-based labeling:
+```bash
+python create_snippets.py video.mp4 --timestamps timestamps.txt
+```
+
+### Timestamp File Format
+
+Create a text file with timestamp ranges where points/rallies occur (one per line):
+```
+[45.2, 67.8]
+[120.5, 145.3]
+[200.1, 225.7]
+```
 ## Usage
 
 ### Training
@@ -77,13 +96,6 @@ python train.py \
     --epochs 10
 ```
 
-### Debug Mode
-
-Enable debug mode to see detailed information about data loaders:
-```bash
-python train.py --data-dir video_clips --debug
-```
-
 ## Model Architecture
 
 - **Base Model**: Swin3D-B pre-trained on Kinetics-400
@@ -99,6 +111,7 @@ OnPoint/
 ├── models.py          # Model loading and fine-tuning functions
 ├── datasets.py        # Dataset classes and data loading utilities
 ├── utils.py           # Video processing and utility functions
+├── create_snippets.py # Script to create training clips from longer videos
 ├── interactive.py     # Interactive inference (placeholder)
 ├── requirements.txt   # Python dependencies
 ├── .gitignore        # Git ignore rules
