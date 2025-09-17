@@ -74,3 +74,13 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
     except Exception as e:
         print(f"Error loading checkpoint: {e}")
         return 0
+
+# Loads a fine-tuned model from saved weights
+def load_trained_model(model_path, device):
+    model, transforms = load_video_swin_model()
+    model = prepare_for_finetuning(model)
+
+    # Load saved weights
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model = model.to(device)
+    return model, transforms

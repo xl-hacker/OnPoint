@@ -99,7 +99,7 @@ def train_model(model, train_dataloader, val_dataloader, num_epochs=10, device=N
         os.makedirs('checkpoints', exist_ok=True)
         
         # Save with epoch number in filename
-        checkpoint_path = f'checkpoints/shot_classifier_epoch_{epoch + 1}.pth'
+        checkpoint_path = f'checkpoints/point_classifier_epoch_{epoch + 1}.pth'
         torch.save(checkpoint, checkpoint_path)
         print(f"Checkpoint saved: {checkpoint_path}")
 

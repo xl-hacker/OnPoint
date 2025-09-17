@@ -15,17 +15,29 @@ def get_device():
     print(f"Device: {device}")
     return device
 
-def extract_frames_uniform(video_path, num_frames):
+def extract_frames_uniform(
+    video_path, num_frames=16, start_time=None, end_time=None):
+    """
+    Extract frames from video between start_time and end_time. 
+    All frames if start and end are None.
+    """
     cap = cv2.VideoCapture(video_path)
-    
     if not cap.isOpened():
         raise ValueError(f"Could not open video: {video_path}")
     
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    if start_time is not None and end_time is not None:
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        start_frame = int(start_time * fps)
+        end_frame = int(end_time * fps)
+        total_frames = end_frame - start_frame
     
     if total_frames <= num_frames:
-        # If video has fewer frames than needed, repeat frames
-        frame_indices = list(range(total_frames))
+        if start_time is not None and end_time is not None:
+            frame_indices = list(range(start_frame, end_frame))
+        else:
+            frame_indices = list(range(total_frames))
         while len(frame_indices) < num_frames:
             frame_indices.extend(frame_indices[:num_frames - len(frame_indices)])
     else:
