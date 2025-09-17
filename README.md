@@ -96,6 +96,33 @@ python train.py \
     --epochs 10
 ```
 
+### Video Inference
+
+Analyze tennis videos to detect points/rallies using a trained model:
+
+#### Basic Analysis
+
+Analyze a video with default settings (3-second windows, 1-second overlap):
+```bash
+python video_inference.py tennis_match.mp4
+```
+
+#### Output Videos
+
+The inference script creates two output videos:
+
+1. **Visualization Video** (`*_analyzed.mp4`):
+   - Original video with prediction overlays
+   - Shows "Background" or "Point ongoing" status
+   - Displays confidence scores
+   - Color-coded: Green for background, Red for points
+
+2. **Compilation Video** (`*_class1_compilation.mp4`):
+   - Contains only the clips predicted as points/rallies
+   - Automatically merges consecutive clips
+   - Adds buffer time around detected points
+   - Perfect for creating highlight reels
+
 ## Model Architecture
 
 - **Base Model**: Swin3D-B pre-trained on Kinetics-400
@@ -112,6 +139,7 @@ OnPoint/
 ├── datasets.py        # Dataset classes and data loading utilities
 ├── utils.py           # Video processing and utility functions
 ├── create_snippets.py # Script to create training clips from longer videos
+├── video_inference.py # Video analysis and inference script
 ├── interactive.py     # Interactive inference (placeholder)
 ├── requirements.txt   # Python dependencies
 ├── .gitignore        # Git ignore rules
